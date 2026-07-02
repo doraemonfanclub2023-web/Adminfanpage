@@ -1,0 +1,372 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Quản Trị & Công Văn Nhóm</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --bg-color: #f8f9fa;
+            --text-color: #333;
+            --card-bg: #ffffff;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo h1 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+        }
+
+        .nav-links a {
+            color: #cbd5e1;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: white;
+        }
+
+        /* Main Content Container */
+        main {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 2rem;
+        }
+
+        section h2 {
+            margin-bottom: 1.5rem;
+            color: var(--primary-color);
+            border-bottom: 3px solid var(--secondary-color);
+            padding-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Controls: Search & Filter */
+        .controls {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .search-box, .filter-box {
+            padding: 0.6rem 1rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 0.95rem;
+            outline: none;
+        }
+
+        .search-box {
+            flex: 1;
+            min-width: 250px;
+        }
+
+        /* Công văn Table Styles */
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background-color: #fcfcfc;
+        }
+
+        .badge {
+            padding: 0.25rem 0.6rem;
+            border-radius: 50px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: white;
+        }
+
+        .badge-important { background-color: #e74c3c; }
+        .badge-info { background-color: #3498db; }
+        .badge-normal { background-color: #2ecc71; }
+
+        .btn-view {
+            color: var(--secondary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .btn-view:hover {
+            text-decoration: underline;
+        }
+
+        /* Thành viên Grid Styles */
+        .members-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .member-card {
+            background: #fff;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .member-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.05);
+        }
+
+        .member-avatar {
+            width: 80px;
+            height: 80px;
+            background: #e2e8f0;
+            border-radius: 50%;
+            margin: 0 auto 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: #a0aec0;
+        }
+
+        .member-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .member-role {
+            font-size: 0.85rem;
+            color: var(--secondary-color);
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .navbar {
+                flex-direction: column;
+                gap: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Thanh điều hướng -->
+    <header>
+        <div class="navbar">
+            <div class="logo">
+                <h1><i class="fa-solid fa-shield-halved"></i> Ban Quản Trị</h1>
+            </div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#cong-van" class="active">Công Văn</a></li>
+                    <li><a href="#thanh-vien">Thành Viên BQT</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Nội dung chính -->
+    <main>
+        
+        <!-- MỤC 1: CÔNG VĂN -->
+        <section id="cong-van">
+            <h2><i class="fa-solid fa-file-lines"></i> Danh Sách Công Văn & Quyết Định</h2>
+            
+            <!-- Thanh tìm kiếm & Lọc dữ liệu nhanh -->
+            <div class="controls">
+                <input type="text" id="searchInput" class="search-box" placeholder="Tìm theo số hiệu hoặc tiêu đề công văn..." onkeyup="filterTable()">
+                <select id="typeFilter" class="filter-box" onchange="filterTable()">
+                    <option value="">Tất cả loại văn bản</option>
+                    <option value="Quyết định">Quyết định</option>
+                    <option value="Thông báo">Thông báo</option>
+                    <option value="Nội quy">Nội quy</option>
+                </select>
+            </div>
+
+            <!-- Bảng dữ liệu -->
+            <div class="table-responsive">
+                <table id="dispatchTable">
+                    <thead>
+                        <tr>
+                            <th>Số hiệu</th>
+                            <th>Ngày ban hành</th>
+                            <th>Tiêu đề / Trích yếu</th>
+                            <th>Loại</th>
+                            <th>Mức độ</th>
+                            <th>Hành động</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><b>01/2026/QĐ-BQT</b></td>
+                            <td>01/07/2026</td>
+                            <td>V/v Kiện toàn nhân sự và phân công nhiệm vụ thành viên Ban Quản Trị</td>
+                            <td>Quyết định</td>
+                            <td><span class="badge badge-important">Khẩn</span></td>
+                            <td><a href="#" class="btn-view"><i class="fa-regular fa-eye"></i> Xem</a></td>
+                        </tr>
+                        <tr>
+                            <td><b>12/2026/TB-ADMIN</b></td>
+                            <td>28/06/2026</td>
+                            <td>Thông báo bảo trì hệ thống và cập nhật quy chế hoạt động mới</td>
+                            <td>Thông báo</td>
+                            <td><span class="badge badge-info">Bình thường</span></td>
+                            <td><a href="#" class="btn-view"><i class="fa-regular fa-eye"></i> Xem</a></td>
+                        </tr>
+                        <tr>
+                            <td><b>02/2026/NQ-BQT</b></td>
+                            <td>15/05/2026</td>
+                            <td>Nội quy bảo mật thông tin nội bộ và quy trình duyệt bài</td>
+                            <td>Nội quy</td>
+                            <td><span class="badge badge-important">Nội bộ</span></td>
+                            <td><a href="#" class="btn-view"><i class="fa-regular fa-eye"></i> Xem</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- MỤC 2: THÀNH VIÊN -->
+        <section id="thanh-vien">
+            <h2><i class="fa-solid fa-users"></i> Ban Quản Trị & Đội Ngũ Admin</h2>
+            
+            <div class="members-grid">
+                <!-- Thành viên 1 -->
+                <div class="member-card">
+                    <div class="member-avatar"><i class="fa-solid fa-user-gear"></i></div>
+                    <div class="member-role">Founder / Admin</div>
+                    <div class="member-name">Nguyễn Văn A</div>
+                </div>
+                <!-- Thành viên 2 -->
+                <div class="member-card">
+                    <div class="member-avatar"><i class="fa-solid fa-user-shield"></i></div>
+                    <div class="member-role">Co-Admin</div>
+                    <div class="member-name">Trần Thị B</div>
+                </div>
+                <!-- Thành viên 3 -->
+                <div class="member-card">
+                    <div class="member-avatar"><i class="fa-solid fa-user-pen"></i></div>
+                    <div class="member-role">Kiểm Duyệt Viên</div>
+                    <div class="member-name">Lê Hoàng C</div>
+                </div>
+                <!-- Thành viên 4 -->
+                <div class="member-card">
+                    <div class="member-avatar"><i class="fa-solid fa-user"></i></div>
+                    <div class="member-role">Kỹ Thuật / Dev</div>
+                    <div class="member-name">Phạm Minh D</div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <p>&copy; 2026 Hệ thống Quản trị Nội bộ. Thiết kế bởi Ban Quản Trị.</p>
+    </footer>
+
+    <!-- Bộ xử lý JavaScript lọc/tìm kiếm dữ liệu tại chỗ -->
+    <script>
+        function filterTable() {
+            const searchInput = document.getElementById("searchInput").value.toLowerCase();
+            const typeFilter = document.getElementById("typeFilter").value.toLowerCase();
+            const table = document.getElementById("dispatchTable");
+            const tr = table.getElementsByTagName("tr");
+
+            for (let i = 1; i < tr.length; i++) {
+                let row = tr[i];
+                let textData = row.textContent.toLowerCase();
+                let typeData = row.getElementsByTagName("td")[3].textContent.toLowerCase();
+
+                let matchesSearch = textData.includes(searchInput);
+                let matchesFilter = typeFilter === "" || typeData.includes(typeFilter);
+
+                if (matchesSearch && matchesFilter) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    </script>
+</body>
+</html>
